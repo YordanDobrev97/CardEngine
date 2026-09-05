@@ -6,4 +6,5 @@ export interface GameEngine {
     destroy(): void;
     createSprite(assetKey: string): RenderObject;
     addToScene(object: RenderObject): void;
+    applyLayout(): void;
 }

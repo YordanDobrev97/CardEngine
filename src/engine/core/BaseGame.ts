@@ -19,6 +19,7 @@ export abstract class BaseGame {
     async init() {
         await this.loadAssets();
         await this.onInit();
+        this._engine.applyLayout();
     }
 
     protected async loadAssets() {
@@ -26,7 +27,6 @@ export abstract class BaseGame {
     }
     
     protected abstract onInit(): Promise<void>;
-    protected onStart() {}
 
     protected createSprite(assetKey: string): RenderObject {
         const sprite = this._engine.createSprite(assetKey);
