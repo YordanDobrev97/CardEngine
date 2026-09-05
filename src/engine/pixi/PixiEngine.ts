@@ -1,12 +1,10 @@
-import { Application } from 'pixi.js';
-
+import { Application, Assets, Sprite } from 'pixi.js';
 import { GameEngine } from '../core/GameEngine'
-import { GameRenderer } from '../rendering/GameRenderer';
-import { PixiRenderer } from '../rendering/PixiRenderer';
+import { RenderObject } from '../rendering/RenderObject';
+import { PixiRenderObject } from '../rendering/PixiRenderObject';
 
 export class PixiEngine implements GameEngine {
     private _app: Application;
-    private _renderer: PixiRenderer | null = null;
 
     constructor() {
         this._app = new Application();
@@ -14,23 +12,27 @@ export class PixiEngine implements GameEngine {
         globalThis.__PIXI_APP__ = this._app;
     }
 
-    getRenderer(): GameRenderer {
-        if (!this._renderer) {
-            throw new Error('Renderer is not initialized!');
-        }
-        return this._renderer;
+    createSprite(assetKey: string): RenderObject  {
+        const texture = Assets.get(assetKey);
+        const sprite = new Sprite(texture);
+        return new PixiRenderObject(sprite);
     }
 
-    destroy(): void {}
+    addToScene(object: RenderObject): void {
+        if (!(object instanceof PixiRenderObject)) {
+            throw new Error('PixiEngine can only add PixiRenderObject');
+        }
+
+        this._app.stage.addChild(object.displayObject);
+    }
+
+    destroy(): void { }
 
     async init(): Promise<void> {
         await this._app.init({ resizeTo: window });
-
-        this._renderer = new PixiRenderer(this._app.stage);
     }
 
     mount(element: HTMLElement): void {
         element.appendChild(this._app.canvas);
     }
-
 }

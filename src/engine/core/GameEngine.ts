@@ -1,8 +1,9 @@
-import {GameRenderer} from '../rendering/GameRenderer';
+import { RenderObject } from '../rendering/RenderObject';
 
 export interface GameEngine {
     init(): Promise<void>;
     mount(element: HTMLElement): void;
-    getRenderer(): GameRenderer;
     destroy(): void;
+    createSprite(assetKey: string): RenderObject;
+    addToScene(object: RenderObject): void;
 }

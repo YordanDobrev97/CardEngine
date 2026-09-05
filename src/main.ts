@@ -7,5 +7,4 @@ async function startGame() {
     await game.init();
 }
 
-
 startGame();

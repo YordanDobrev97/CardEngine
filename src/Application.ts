@@ -1,7 +1,5 @@
 import {GameEngine} from './engine/core'
-import appConfig from './config/app';
 import {WarGame} from './games/war/Game';
-import { GameRenderer } from './engine/rendering/GameRenderer';
 
 export default class Application {
     private _engine: GameEngine;
@@ -19,11 +17,11 @@ export default class Application {
 
         await this._engine.init();
         this._engine.mount(mountElement);
-        const game = this.createGame(this._engine.getRenderer());
+        const game = this.createGame(this._engine);
         await game.init();
     }
 
-    private createGame(renderer: GameRenderer) {
-        return new WarGame('war', renderer);
+    private createGame(engine: GameEngine) {
+        return new WarGame('war', engine);
     }
 }
