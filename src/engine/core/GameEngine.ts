@@ -1,4 +1,4 @@
-import {GameRenderer} from './renders/GameRenderer';
+import {GameRenderer} from '../rendering/GameRenderer';
 
 export interface GameEngine {
     init(): Promise<void>;

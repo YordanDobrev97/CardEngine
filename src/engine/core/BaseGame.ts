@@ -1,6 +1,6 @@
-import {GameLoader} from './GameLoader';
-import {AssetConfig} from './types/AssetConfig';
-import {GameRenderer} from './renders/GameRenderer';
+import {GameLoader} from '../GameLoader';
+import {AssetConfig} from '../types/AssetConfig';
+import {GameRenderer} from '../rendering/GameRenderer';
 
 export abstract class BaseGame {
     private _gameId: string | null;

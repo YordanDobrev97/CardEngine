@@ -1,7 +1,7 @@
-import {GameEngine} from './engine'
+import {GameEngine} from './engine/core'
 import appConfig from './config/app';
 import {WarGame} from './games/war/Game';
-import { GameRenderer } from './engine/renders/GameRenderer';
+import { GameRenderer } from './engine/rendering/GameRenderer';
 
 export default class Application {
     private _engine: GameEngine;

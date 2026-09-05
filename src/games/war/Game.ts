@@ -1,6 +1,6 @@
-import { BaseGame } from '../../engine';
+import { BaseGame } from '../../engine/core';
 import { AssetConfig } from '../../engine/types/AssetConfig';
-import { GameRenderer } from '../../engine/renders/GameRenderer';
+import { GameRenderer } from '../../engine/rendering/GameRenderer';
 import assets from './config/assets';
 
 export class WarGame extends BaseGame {
@@ -10,15 +10,9 @@ export class WarGame extends BaseGame {
         super(gameId, renderer);
     }
 
-    async init(): Promise<void> {
-        await super.init();
-
-        return Promise.resolve();
-    }
-
-    protected onInit(): Promise<void> {
+    protected async onInit(): Promise<void> {
         const background = this._renderer.createSprite('background');
         this._renderer.add(background);
-        return Promise.resolve();
+       
     }
 }

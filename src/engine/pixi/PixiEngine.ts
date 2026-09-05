@@ -1,8 +1,8 @@
 import { Application } from 'pixi.js';
 
-import { GameEngine } from './GameEngine'
-import { GameRenderer } from './renders/GameRenderer';
-import { PixiRenderer } from './renders/PixiRenderer';
+import { GameEngine } from '../core/GameEngine'
+import { GameRenderer } from '../rendering/GameRenderer';
+import { PixiRenderer } from '../rendering/PixiRenderer';
 
 export class PixiEngine implements GameEngine {
     private _app: Application;
@@ -10,6 +10,8 @@ export class PixiEngine implements GameEngine {
 
     constructor() {
         this._app = new Application();
+        //@ts-ignore
+        globalThis.__PIXI_APP__ = this._app;
     }
 
     getRenderer(): GameRenderer {
