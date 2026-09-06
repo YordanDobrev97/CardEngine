@@ -1,8 +1,11 @@
-import {GameEngine} from './engine/core'
-import {WarGame} from './games/war/Game';
+import { GameEngine } from './engine/core'
+import { defaultTheme } from './engine/theme/defaultTheme';
+import { Theme } from './engine/theme/Theme';
+import { WarGame } from './games/war/Game';
 
 export default class Application {
     private _engine: GameEngine;
+    private _theme: Theme = defaultTheme;
 
     constructor(engine: GameEngine) {
         this._engine = engine;
@@ -22,6 +25,6 @@ export default class Application {
     }
 
     private createGame(engine: GameEngine) {
-        return new WarGame('war', engine);
+        return new WarGame('war', engine, this._theme);
     }
 }
