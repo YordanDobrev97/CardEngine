@@ -1,12 +1,13 @@
 import { RenderObject } from '../rendering/RenderObject';
-import { TextStyle } from '../ui/TextStyle';
+import { SpriteOptions } from '../ui/Sprite';
+import { UIEngine } from '../ui/UIEngine';
 
 export interface GameEngine {
     init(): Promise<void>;
     mount(element: HTMLElement): void;
     destroy(): void;
-    createSprite(assetKey: string): RenderObject;
+    createSprite(assetKey: string, options?: SpriteOptions): RenderObject;
     addToScene(object: RenderObject): void;
     applyLayout(): void;
-    createText(value: string, options: TextStyle): RenderObject;
+    readonly ui: UIEngine;
 }

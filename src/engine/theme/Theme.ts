@@ -1,4 +1,8 @@
-import { TextVariant } from '../ui/TextOptions';
-import {TextStyle} from '../ui/TextStyle';
+import { TextVariant } from '../ui/Text';
+import { TextStyle } from '../ui/TextStyle';
+import { ButtonStyle, ButtonVariant } from '../ui/Button';
 
-export type Theme = Record<TextVariant, TextStyle>;
+export interface Theme {
+    text: Record<TextVariant, TextStyle>;
+    button: Record<ButtonVariant, ButtonStyle>;
+}

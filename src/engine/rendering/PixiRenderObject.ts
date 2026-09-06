@@ -1,10 +1,13 @@
 import { ContainerChild } from "pixi.js";
 import { RenderObject } from "./RenderObject";
+import { LayoutOptions } from "../types/LayoutOptions";
 
 export class PixiRenderObject implements RenderObject {
     private readonly _displayObject: ContainerChild;
     private readonly _originalWidth: number;
     private readonly _originalHeight: number;
+
+    layout?: LayoutOptions;
 
     constructor(object: ContainerChild) {
         this._displayObject = object;

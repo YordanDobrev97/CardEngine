@@ -1,9 +1,10 @@
-import { Application, Assets, ContainerChild, Sprite, Text as PixiText } from 'pixi.js';
+import { Application, Assets, ContainerChild, Sprite } from 'pixi.js';
 import { GameEngine } from '../core/GameEngine'
 import { RenderObject } from '../rendering/RenderObject';
 import { PixiRenderObject } from '../rendering/PixiRenderObject';
 import { LayoutManager } from '../core/LayoutManager';
-import { TextStyle } from '../ui/TextStyle';
+import { PixiUiEngine } from './PixiUIEngine';
+import { SpriteOptions } from '../ui/Sprite';
 
 export class PixiEngine implements GameEngine {
     private _app: Application;
@@ -11,55 +12,26 @@ export class PixiEngine implements GameEngine {
     private _resizeFrame: number | null = null;
     private readonly _renderObjects = new WeakMap<ContainerChild, PixiRenderObject>();
 
+    readonly ui: PixiUiEngine;
+
     constructor() {
         this._app = new Application();
         //@ts-ignore
         globalThis.__PIXI_APP__ = this._app;
+        this.ui = new PixiUiEngine();
     }
 
-    createText(value: string, options: TextStyle): RenderObject {
-        const text = new PixiText({
-            text: value,
-            style: {
-                fontSize: options.fontSize,
-                fill: options.color,
-                fontFamily: options.fontFamily,
-                fontWeight: options.fontWeight,
-                letterSpacing: options.letterSpacing,
-
-                stroke: options.stroke
-                    ? {
-                        color: options.stroke.color,
-                        width: options.stroke.width,
-                    }
-                    : undefined,
-
-                dropShadow: options.shadow
-                    ? {
-                        color: options.shadow.color,
-                        alpha: options.shadow.alpha,
-                        blur: options.shadow.blur,
-                        distance: options.shadow.distance,
-                    }
-                    : undefined,
-            }
-        });
-
-        const renderObject = new PixiRenderObject(text);
-        this._renderObjects.set(text, renderObject);
-
-        return renderObject;
-    }
-
-    createSprite(assetKey: string): RenderObject {
+    createSprite(assetKey: string, options?: SpriteOptions): RenderObject {
         const texture = Assets.get(assetKey);
         const sprite = new Sprite(texture);
+
+        if (options?.alpha) {
+            sprite.alpha = options.alpha;
+        }
+
         sprite.label = assetKey;
 
-        const renderObject = new PixiRenderObject(sprite);
-        this._renderObjects.set(sprite, renderObject);
-
-        return renderObject;
+        return new PixiRenderObject(sprite);
     }
 
     addToScene(object: RenderObject): void {
@@ -67,6 +39,8 @@ export class PixiEngine implements GameEngine {
             throw new Error('PixiEngine can only add PixiRenderObject');
         }
 
+        const displayObject = object.displayObject;
+        this._renderObjects.set(displayObject, object);
         this._app.stage.addChild(object.displayObject);
     }
 
@@ -98,6 +72,19 @@ export class PixiEngine implements GameEngine {
         const background = this.findObject('background');
         if (background) {
             this._layoutManager?.fit(background);
+        }
+
+        for (const child of this._app.stage.children) {
+            const renderObject = this._renderObjects.get(child);
+
+            if (!renderObject?.layout) {
+                continue;
+            }
+
+            this._layoutManager?.arrange(
+                renderObject,
+                renderObject.layout
+            );
         }
     }
 

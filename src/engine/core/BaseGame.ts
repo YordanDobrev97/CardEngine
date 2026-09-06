@@ -3,7 +3,9 @@ import { RenderObject } from '../rendering/RenderObject';
 import { Theme } from '../theme/Theme';
 import { ThemeResolver } from '../theme/ThemeResolver';
 import { AssetConfig } from '../types/AssetConfig';
-import { TextOptions } from '../ui/TextOptions';
+import { ButtonOptions } from '../ui/Button';
+import { SpriteOptions } from '../ui/Sprite';
+import { TextOptions } from '../ui/Text';
 import { GameEngine } from './GameEngine';
 
 export abstract class BaseGame {
@@ -36,12 +38,29 @@ export abstract class BaseGame {
     protected abstract onInit(): Promise<void>;
 
     protected createText(value: string, options?: TextOptions) {
-        const styles = this._themeResolver.resolve(options?.variant ?? 'primary');
-        return this._engine.createText(value, styles);
+        const styles = this._themeResolver.resolveText(options?.variant ?? 'primary');
+        const text = this._engine.ui.createText(value, styles);
+
+        if (options?.layout) {
+            text.layout = options.layout;
+        }
+
+        return text;
     }
 
-    protected createSprite(assetKey: string): RenderObject {
-        const sprite = this._engine.createSprite(assetKey);
+    protected createButton(label: string, style?: ButtonOptions) {
+        const styles = this._themeResolver.resolveButton(style?.variant ?? 'primary');
+        const btn = this._engine.ui.createButton(label, styles);
+        
+        if (style?.layout) {
+            btn.layout = style.layout;
+        }
+
+        return btn;
+    }
+
+    protected createSprite(assetKey: string, options?: SpriteOptions): RenderObject {
+        const sprite = this._engine.createSprite(assetKey, options);
         return sprite;
     }
 

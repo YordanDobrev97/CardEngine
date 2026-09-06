@@ -15,10 +15,40 @@ export class WarGame extends BaseGame {
     }
 
     protected async onInit(): Promise<void> {
-        const background = this.createSprite('background');
-        const title = this.createText('War');
+        const background = this.createSprite('background', {
+            alpha: 0.4,
+        });
+        
+        const title = this.createText('War', {
+            layout: {
+                horizontal: 'center',
+                vertical: 'top',
+                shift: {
+                    y: 100,
+                }
+            }
+        });
+
+        const subtitle = this.createText('Classic card battle', {
+            layout: {
+                horizontal: 'center',
+                vertical: 'top',
+                shift: {
+                    y: 250
+                }
+            },
+        })
+
+        const playButton = this.createButton('Play', {
+            layout: {
+                horizontal: 'center',
+                vertical: 'center'
+            }
+        })
 
         this.addToScene(background);
         this.addToScene(title);
+        this.addToScene(subtitle);
+        this.addToScene(playButton);
     }
 }

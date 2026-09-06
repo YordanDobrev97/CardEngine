@@ -1,3 +1,4 @@
+import { LayoutOptions } from "../types/LayoutOptions";
 
 export interface RenderObject {
     readonly width: number;
@@ -7,6 +8,8 @@ export interface RenderObject {
 
     x: number;
     y: number;
+
+    layout?: LayoutOptions;
 
     setScale(scale: number): void;
 }
