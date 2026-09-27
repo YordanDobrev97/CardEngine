@@ -15,9 +15,10 @@ export class WarGame extends BaseGame {
     }
 
     protected async onInit(): Promise<void> {
-        const background = this.createSprite('background', {
-            alpha: 0.4,
-        });
+        const background = this.createBackground({
+            type: 'color',
+            color: '#11493E'
+        })
         
         const title = this.createText('War', {
             layout: {
@@ -29,26 +30,51 @@ export class WarGame extends BaseGame {
             }
         });
 
-        const subtitle = this.createText('Classic card battle', {
+        const subtitle = this.createText('Класическа игра с карти', {
             layout: {
                 horizontal: 'center',
                 vertical: 'top',
                 shift: {
-                    y: 250
+                    y: 180
                 }
             },
-        })
+        });
 
-        const playButton = this.createButton('Play', {
+        const playButton = this.createButton('Играй', {
             layout: {
                 horizontal: 'center',
-                vertical: 'center'
-            }
+                vertical: 'center',
+            },
+            variant: 'danger',
+        });
+
+         const rulesButton = this.createButton('Правила', {
+            layout: {
+                horizontal: 'center',
+                vertical: 'center',
+                shift: {
+                    y: 75,
+                }
+            },
+            variant: 'secondary',
+        });
+
+        const settingsButton = this.createButton('Настройки', {
+            layout: {
+                horizontal: 'center',
+                vertical: 'center',
+                shift: {
+                    y: 145,
+                }
+            },
+            variant: 'secondary',
         })
 
         this.addToScene(background);
         this.addToScene(title);
         this.addToScene(subtitle);
         this.addToScene(playButton);
+        this.addToScene(rulesButton);
+        this.addToScene(settingsButton);
     }
 }

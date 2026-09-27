@@ -3,6 +3,7 @@ import { RenderObject } from '../rendering/RenderObject';
 import { Theme } from '../theme/Theme';
 import { ThemeResolver } from '../theme/ThemeResolver';
 import { AssetConfig } from '../types/AssetConfig';
+import { BackgroundOptions } from '../ui/Background';
 import { ButtonOptions } from '../ui/Button';
 import { SpriteOptions } from '../ui/Sprite';
 import { TextOptions } from '../ui/Text';
@@ -36,6 +37,10 @@ export abstract class BaseGame {
     }
     
     protected abstract onInit(): Promise<void>;
+
+    protected createBackground(type: BackgroundOptions) {
+        return this._engine.ui.createBackground(type);
+    }
 
     protected createText(value: string, options?: TextOptions) {
         const styles = this._themeResolver.resolveText(options?.variant ?? 'primary');

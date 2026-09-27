@@ -24,7 +24,7 @@ export const defaultTheme: Theme = {
     },
     button: {
         primary: {
-            width: 220,
+            width: 420,
             height: 64,
             backgroundColor: '#1B1B1B',
             borderColor: '#C8A15A',
@@ -34,7 +34,7 @@ export const defaultTheme: Theme = {
         },
 
         secondary: {
-            width: 220,
+            width: 420,
             height: 64,
             backgroundColor: '#2A2A2A',
             borderColor: '#6B6B6B',
@@ -43,11 +43,13 @@ export const defaultTheme: Theme = {
         },
 
         danger: {
-            width: 220,
+            width: 420,
             height: 64,
-            backgroundColor: '#5A1F1F',
+            backgroundColor: '#E0B84A',
             borderColor: '#A94444',
-            borderWidth: 2,
+            textColor: '#2d2c2c',
+            fontSize: 40,
+            borderWidth: 1,
             borderRadius: 10,
         },
     }

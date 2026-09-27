@@ -5,6 +5,7 @@ import { PixiRenderObject } from '../rendering/PixiRenderObject';
 import { LayoutManager } from '../core/LayoutManager';
 import { PixiUiEngine } from './PixiUIEngine';
 import { SpriteOptions } from '../ui/Sprite';
+import { BackgroundOptions } from '../ui/Background';
 
 export class PixiEngine implements GameEngine {
     private _app: Application;
@@ -19,6 +20,10 @@ export class PixiEngine implements GameEngine {
         //@ts-ignore
         globalThis.__PIXI_APP__ = this._app;
         this.ui = new PixiUiEngine();
+    }
+
+    createBackground(options: BackgroundOptions) {
+        return this.ui.createBackground(options);
     }
 
     createSprite(assetKey: string, options?: SpriteOptions): RenderObject {
